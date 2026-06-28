@@ -15,7 +15,8 @@ export function Contact() {
           </p>
 
           <dl className="mt-8 space-y-4">
-            <div className="flex items-center gap-3">
+            <dt className="sr-only">Email</dt>
+            <dd className="flex items-center gap-3">
               <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-md border border-hairline text-accent">
                 <Mail className="size-4" aria-hidden />
               </span>
@@ -25,8 +26,9 @@ export function Contact() {
               >
                 {profile.email}
               </a>
-            </div>
-            <div className="flex items-center gap-3">
+            </dd>
+            <dt className="sr-only">Phone</dt>
+            <dd className="flex items-center gap-3">
               <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-md border border-hairline text-accent">
                 <Phone className="size-4" aria-hidden />
               </span>
@@ -36,13 +38,14 @@ export function Contact() {
               >
                 {profile.phone}
               </a>
-            </div>
-            <div className="flex items-center gap-3">
+            </dd>
+            <dt className="sr-only">Location</dt>
+            <dd className="flex items-center gap-3">
               <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-md border border-hairline text-accent">
                 <MapPin className="size-4" aria-hidden />
               </span>
               <span className="text-sm text-muted">{profile.location}</span>
-            </div>
+            </dd>
           </dl>
 
           <SocialLinks className="mt-8" />
