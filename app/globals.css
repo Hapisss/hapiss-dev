@@ -1,26 +1,118 @@
 @import "tailwindcss";
 
+/* next-themes toggles a `.dark` class on <html>; make Tailwind's `dark:` follow it
+   instead of the default prefers-color-scheme media query. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ==========================================================================
+   DESIGN TOKENS — "warm ink + amber"
+   Light = warm paper. Dark = warm ink (primary). One accent, biased-warm
+   neutrals so the greyscale reads chosen, not inherited.
+   ========================================================================== */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ground: #faf8f3;
+  --surface: #ffffff;
+  --surface-2: #f3f0e9;
+  --hairline: #e5e0d6;
+  --hairline-strong: #d6cfc1;
+  --foreground: #1a1815;
+  --muted: #6b6359;
+  --accent: #8a5a17;
+  --accent-ink: #ffffff;
+  --accent-soft: rgba(138, 90, 23, 0.1);
 }
 
+.dark {
+  --ground: #100f0d;
+  --surface: #1a1815;
+  --surface-2: #211e19;
+  --hairline: #2e2a25;
+  --hairline-strong: #413b33;
+  --foreground: #eceae5;
+  --muted: #9a938a;
+  --accent: #d7a24b;
+  --accent-ink: #100f0d;
+  --accent-soft: rgba(215, 162, 75, 0.12);
+}
+
+/* Expose tokens to Tailwind utilities (bg-ground, text-muted, border-hairline,
+   text-accent, …). `inline` keeps the var reference live so utilities react to
+   the theme class. */
 @theme inline {
-  --color-background: var(--background);
+  --color-ground: var(--ground);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-hairline: var(--hairline);
+  --color-hairline-strong: var(--hairline-strong);
   --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ==========================================================================
+   BASE
+   ========================================================================== */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem; /* offset for the sticky header */
+    -webkit-text-size-adjust: 100%;
+  }
+
+  ::selection {
+    background-color: var(--accent);
+    color: var(--accent-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 2px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ==========================================================================
+   SCROLL REVEAL — pure CSS, progressive enhancement.
+   Uses scroll-driven animations where supported (Chromium); other browsers
+   (and reduced-motion users) just show content. No JS, no hidden content.
+   ========================================================================== */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: reveal-fade-up linear both;
+      animation-timeline: view();
+      animation-range: entry 5% entry 55%;
+    }
+  }
+}
+
+@keyframes reveal-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
