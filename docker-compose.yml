@@ -14,3 +14,4 @@ networks:
   hapiss-network:
     name: hapiss-network
     driver: bridge
+    external: true
