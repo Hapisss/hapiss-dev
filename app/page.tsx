@@ -56,6 +56,7 @@ export default function Home() {
       <Navbar />
 
       <main id="main">
+        <div>TESTING</div>
         <Hero />
         <About />
         <Experience />
