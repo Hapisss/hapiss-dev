@@ -1,6 +1,6 @@
 services:
   frontend:
-    container_name: hapiss-frontend
+    container_name: hapiss-dev
     build:
       context: .
       dockerfile: Dockerfile
