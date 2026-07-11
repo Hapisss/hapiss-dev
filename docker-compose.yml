@@ -1,0 +1,16 @@
+services:
+  frontend:
+    container_name: hapiss-frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    networks:
+      - hapiss-network
+
+networks:
+  hapiss-network:
+    name: hapiss-network
+    driver: bridge
